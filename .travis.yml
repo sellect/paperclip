@@ -6,15 +6,33 @@ rvm:
 script: "bundle exec rake clean spec cucumber"
 
 gemfile:
-  - gemfiles/3.2.awsv2.1.gemfile
-  - gemfiles/4.1.awsv2.1.gemfile
-  - gemfiles/4.2.awsv2.1.gemfile
-  - gemfiles/3.2.awsv2.0.gemfile
-  - gemfiles/4.1.awsv2.0.gemfile
-  - gemfiles/4.2.awsv2.0.gemfile
+  # RAILS 3.2
   - gemfiles/3.2.awsv1.gemfile
+  - gemfiles/3.2.awsv2.0.gemfile
+  - gemfiles/3.2.awsv2.1.gemfile
+  # RAILS 4.1
   - gemfiles/4.1.awsv1.gemfile
+  - gemfiles/4.1.awsv2.0.gemfile
+  - gemfiles/4.1.awsv2.1.gemfile
+  # RAILS 4.2
   - gemfiles/4.2.awsv1.gemfile
+  - gemfiles/4.2.awsv2.0.gemfile
+  - gemfiles/4.2.awsv2.1.gemfile
+  # RAILS MASTER
+  - gemfiles/master.awsv1.gemfile
+  - gemfiles/master.awsv2.0.gemfile
+  - gemfiles/master.awsv2.1.gemfile
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - rvm: jruby-19mode
+    - rvm: rbx-2
+  exclude:
+    - gemfile: gemfiles/master.awsv1.gemfile
+      rvm: 2.0
+    - gemfile: gemfiles/master.awsv2.gemfile
+      rvm: 2.0
 
 sudo: false
 cache: bundler

@@ -1,12 +1,16 @@
 Paperclip
 =========
 
-[![Build Status](https://secure.travis-ci.org/thoughtbot/paperclip.svg?branch=master)](http://travis-ci.org/thoughtbot/paperclip) [![Dependency Status](https://gemnasium.com/thoughtbot/paperclip.svg?travis)](https://gemnasium.com/thoughtbot/paperclip) [![Code Climate](https://codeclimate.com/github/thoughtbot/paperclip.svg)](https://codeclimate.com/github/thoughtbot/paperclip) [![Inline docs](http://inch-ci.org/github/thoughtbot/paperclip.svg)](http://inch-ci.org/github/thoughtbot/paperclip) [![Security](https://hakiri.io/github/thoughtbot/paperclip/master.svg)](https://hakiri.io/github/thoughtbot/paperclip/master)
+[![Build Status](https://secure.travis-ci.org/thoughtbot/paperclip.svg?branch=master)](http://travis-ci.org/thoughtbot/paperclip)
+[![Dependency Status](https://gemnasium.com/thoughtbot/paperclip.svg?travis)](https://gemnasium.com/thoughtbot/paperclip)
+[![Code Climate](https://codeclimate.com/github/thoughtbot/paperclip.svg)](https://codeclimate.com/github/thoughtbot/paperclip)
+[![Inline docs](http://inch-ci.org/github/thoughtbot/paperclip.svg)](http://inch-ci.org/github/thoughtbot/paperclip)
+[![Security](https://hakiri.io/github/thoughtbot/paperclip/master.svg)](https://hakiri.io/github/thoughtbot/paperclip/master)
 
 - [Requirements](#requirements)
-  - [Ruby on Rails](#ruby-and-rails)
+  - [Ruby and Rails](#ruby-and-rails)
   - [Image Processor](#image-processor)
-  - [file](#file)
+  - [`file`](#file)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
   - [Models](#models)
@@ -21,16 +25,16 @@ Paperclip
 - [Security Validations](#security-validations)
 - [Defaults](#defaults)
 - [Migrations](#migrations-1)
-  - [Table Definition](#table-definition)
+  - [Add Attachment Column To A Table](#add-attachment-column-to-a-table)
   - [Schema Definition](#schema-definition)
-  - [Vintage Syntax](#vintage-syntax)
+  - [Vintage syntax](#vintage-syntax)
 - [Storage](#storage)
   - [Understanding Storage](#understanding-storage)
 - [Post Processing](#post-processing)
 - [Events](#events)
 - [URI Obfuscation](#uri-obfuscation)
-  - [MD5 Checksum / Fingerprint](#md5-checksum--fingerprint)
-  - [File Preservation for Soft-Delete](#file-preservation-for-soft-delete)
+- [MD5 Checksum / Fingerprint](#md5-checksum--fingerprint)
+- [File Preservation for Soft-Delete](#file-preservation-for-soft-delete)
 - [Custom Attachment Processors](#custom-attachment-processors)
 - [Dynamic Configuration](#dynamic-configuration)
   - [Dynamic Styles](#dynamic-styles)
@@ -490,6 +494,7 @@ class CreateUsersWithAttachments < ActiveRecord::Migration
     create_table :users do |t|
       t.attachment :avatar
     end
+  end
 
   # This is assuming you are only using the users table for Paperclip attachment. Drop with care!
   def down
@@ -549,7 +554,7 @@ Storage
 Paperclip ships with 3 storage adapters:
 
 * File Storage
-* S3 Storage (via `aws-sdk`)
+* S3 Storage (via `aws-sdk` or `aws-sdk-v1`)
 * Fog Storage
 
 If you would like to use Paperclip with another storage, you can install these
@@ -577,7 +582,11 @@ You may also choose to store your files using Amazon's S3 service. To do so, inc
 the `aws-sdk` gem in your Gemfile:
 
 ```ruby
-gem 'aws-sdk'
+gem 'aws-sdk', '>= 2.0.0' # If using paperclip `master`
+```
+or
+```ruby
+gem 'aws-sdk-v1' # If using paperclip <= v4.3.1
 ```
 
 And then you can specify using S3 from `has_attached_file`.

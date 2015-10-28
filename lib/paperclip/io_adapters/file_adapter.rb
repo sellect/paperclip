@@ -12,7 +12,7 @@ module Paperclip
       self.original_filename ||= File.basename(@target.path)
       @tempfile = copy_to_tempfile(@target)
       @content_type = ContentTypeDetector.new(@target.path).detect
-      @size = File.size(@target)
+      @size = File.size(@tempfile) || File.size(@target)
     end
   end
 end
